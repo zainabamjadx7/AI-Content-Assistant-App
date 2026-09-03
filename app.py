@@ -7,10 +7,8 @@ st.set_page_config(page_title="AI Content Assistant", page_icon="📝", layout="
 st.title("📝 AI Content Assistant")
 st.write("Generate tailored captions, posts, and hashtags instantly using Groq!")
 
-# Sidebar for API Key input
-with st.sidebar:
-    st.header("Settings")
-    api_key = st.text_input("Enter Groq API Key", type="password", help="Get your free key at console.groq.com")
+# Fetch API Key from Streamlit Secrets
+api_key = st.secrets.get("GROQ_API_KEY")
 
 # Main Input Form
 with st.form("content_form"):
@@ -30,7 +28,7 @@ with st.form("content_form"):
 # Generation Logic
 if submit_button:
     if not api_key:
-        st.error("Please provide a Groq API Key in the sidebar.")
+        st.error("GROQ_API_KEY Streamlit Secrets mein missing hai! Settings mein add karein.")
     elif not topic or not audience:
         st.warning("Please fill in both Topic and Target Audience fields.")
     else:
